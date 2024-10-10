@@ -2,7 +2,6 @@
 CREATE TABLE departamentos(
   id_departamento SERIAL PRIMARY KEY,
   nome VARCHAR(256) NOT NULL,
-  id_gerente INTEGER NOT NULL, -- Chave estrangeira será adicionada depois
   andar INTEGER NOT NULL,
   sigla VARCHAR(5) NOT NULL
 );
@@ -46,20 +45,20 @@ CREATE TABLE dependentes(
 );
 
 -- Inserir dados na Tabela Departamentos
-INSERT INTO departamentos (nome, id_gerente, andar, sigla) VALUES
-('Produção', 2, 1, 'PRO'),
-('Compras', 1, 5, 'COM'),
-('Desenvolvimento', 1, 2, 'DEV'),
-('Recursos Humanos', 2, 1, 'RH'),
-('Marketing', 3, 3, 'MKT'),
-('Financeiro', 4, 4, 'FIN'),
-('Suporte Técnico', 5, 2, 'SUP');
+INSERT INTO departamentos (nome, andar, sigla) VALUES
+('Produção', 1, 'PRO'),
+('Compras',5, 'COM'),
+('Desenvolvimento',2, 'DEV'),
+('Recursos Humanos', 1, 'RH'),
+('Marketing', 3, 'MKT'),
+('Financeiro', 4, 'FIN'),
+('Suporte Técnico', 2, 'SUP');
 
 -- Inserir dados na Tabela Cargos
 INSERT INTO cargos (descricao, salario_base, nivel, carga_horaria_semanal, id_departamento) VALUES
 ('Analista de Sistemas', 5000.00, 'analista', 40, 1),
 ('Desenvolvedor Backend', 6000.00, 'analista', 40, 1),
-('Gerente de Projeto', 8000.00, 'gerente', 45, 1),
+(' de Projeto', 8000.00, 'gerente', 45, 1),
 ('Diretor de Tecnologia', 12000.00, 'diretor', 50, 1),
 ('Estagiário de TI', 2000.00, 'estagiário', 30, 7),
 ('Analista de Recursos Humanos', 4500.00, 'analista', 40, 2);
@@ -163,13 +162,9 @@ INSERT INTO historico_salarios (id_funcionario, mes_ano, salario_recebido) VALUE
 (10, '2023-10-31', 6500.00),
 (10, '2023-11-30', 6500.00);
 
--- Adicionar chave estrangeira de id_gerente em Departamentos
-ALTER TABLE departamentos
-ADD CONSTRAINT fk_id_gerente FOREIGN KEY (id_gerente) REFERENCES funcionarios(id_funcionario);
-
 -- Rodar no Terminal do PSQL para criar arquivos CSV
--- \copy public.cargos TO 'C:\Users\Lara\Documents\TP-3-Bloco\cargos.csv' DELIMITER ',' CSV HEADER;
--- \copy public.departamentos TO 'C:\Users\Lara\Documents\TP-3-Bloco\departamentos.csv' DELIMITER ',' CSV HEADER;
--- \copy public.dependentes TO 'C:\Users\Lara\Documents\TP-3-Bloco\dependentes.csv' DELIMITER ',' CSV HEADER;
--- \copy public.funcionarios TO 'C:\Users\Lara\Documents\TP-3-Bloco\funcionarios.csv' DELIMITER ',' CSV HEADER;
--- \copy public.historico_salarios TO 'C:\Users\Lara\Documents\TP-3-Bloco\historico_salarios.csv' DELIMITER ',' CSV HEADER;
+-- \copy public.cargos TO 'C:\Users\Lara\Documents\TP-3-Bloco\csv\cargos.csv' DELIMITER ',' CSV HEADER;
+-- \copy public.departamentos TO 'C:\Users\Lara\Documents\TP-3-Bloco\csv\departamentos.csv' DELIMITER ',' CSV HEADER;
+-- \copy public.dependentes TO 'C:\Users\Lara\Documents\TP-3-Bloco\csv\dependentes.csv' DELIMITER ',' CSV HEADER;
+-- \copy public.funcionarios TO 'C:\Users\Lara\Documents\TP-3-Bloco\csv\funcionarios.csv' DELIMITER ',' CSV HEADER;
+-- \copy public.historico_salarios TO 'C:\Users\Lara\Documents\TP-3-Bloco\csv\historico_salarios.csv' DELIMITER ',' CSV HEADER;

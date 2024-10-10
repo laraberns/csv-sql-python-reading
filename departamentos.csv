@@ -1,8 +1,0 @@
-id_departamento,nome,id_gerente,andar,sigla
-1,Produção,2,1,PRO
-2,Compras,1,5,COM
-3,Desenvolvimento,1,2,DEV
-4,Recursos Humanos,2,1,RH
-5,Marketing,3,3,MKT
-6,Financeiro,4,4,FIN
-7,Suporte Técnico,5,2,SUP
