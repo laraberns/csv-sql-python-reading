@@ -64,5 +64,17 @@ consultar("""
 		  group by funcionarios.nome
 		  having count(funcionarios.nome) >= 2
           """)
-	 
-          
+
+# 8 - Listar o analista que tem o salário mais alto, e que ganhe entre 5000 e 9000
+print("Listar o analista que tem o salário mais alto, e que ganhe entre 5000 e 9000.")
+consultar("""
+        SELECT funcionarios.nome, MAX(historico_salarios.salario_recebido) AS max_salario
+        FROM historico_salarios
+        INNER JOIN funcionarios ON funcionarios.id_funcionario = historico_salarios.id_funcionario 
+        INNER JOIN cargos ON cargos.id_cargo = funcionarios.id_cargo 
+        WHERE cargos.nivel = 'analista'
+        GROUP BY funcionarios.nome
+        HAVING MAX(historico_salarios.salario_recebido) BETWEEN 5000 AND 9000
+        ORDER BY max_salario DESC
+        LIMIT 1
+          """)
