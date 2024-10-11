@@ -73,11 +73,11 @@ def criar_tabelas():
 # Função para inserir os dados a partir dos arquivos CSV
 def inserir_dados():
     # Importando os CSVs
-    data_frame_cargos = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\cargos.csv', encoding='latin-1')
-    data_frame_departamentos = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\departamentos.csv', encoding='latin-1')
-    data_frame_funcionarios = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\funcionarios.csv', encoding='latin-1')
-    data_frame_dependentes = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\dependentes.csv', encoding='latin-1')
-    data_frame_historico_salarios = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\historico_salarios.csv', encoding='latin-1')
+    data_frame_cargos = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\cargos.csv', encoding='latin1')
+    data_frame_departamentos = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\departamentos.csv', encoding='latin1')
+    data_frame_funcionarios = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\funcionarios.csv', encoding='latin1')
+    data_frame_dependentes = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\dependentes.csv', encoding='latin1')
+    data_frame_historico_salarios = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\historico_salarios.csv', encoding='latin1')
 
     # Inserindo os dados nas tabelas SQL
     data_frame_funcionarios.to_sql('funcionarios', engine, if_exists='append', index=False)
