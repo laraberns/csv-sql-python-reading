@@ -38,7 +38,7 @@ resultado_final = pd.merge(
     right_on='id_departamento',
     suffixes=('', '_departamento')
 )
-# print(resultado_final.columns)
+
 contagem_dependentes = resultado_final.groupby('nome')['nome_dependente'].count().reset_index()
 contagem_dependentes.columns = ['Nome Departamento', 'Número de Dependentes']
 departamento_com_mais_dependentes = contagem_dependentes.sort_values(by='Número de Dependentes', ascending=False).head(1)
@@ -46,3 +46,18 @@ departamento_com_mais_dependentes = contagem_dependentes.sort_values(by='Número
 # Exibindo o resultado
 print("Departamento que possui o maior número de dependentes:")
 print(departamento_com_mais_dependentes.to_string())
+
+# 10 - Listar a média de salário por departamento em ordem decrescente.
+funcionarios_departamento = pd.merge(
+    data_frame_funcionarios, 
+    data_frame_departamentos, 
+    on='id_departamento',  
+    suffixes=('_funcionario', '_departamento') 
+)
+media_departamento = funcionarios_departamento.groupby('nome_departamento')['salario_real'].mean().reset_index()
+media_departamento.columns = ['Nome Departamento', 'Média de Salário']
+media_departamento_ordenado = media_departamento.sort_values(by='Média de Salário', ascending=False)
+
+# Exibindo o resultado
+print("Média de salário por departamento em ordem decrescente:")
+print(media_departamento_ordenado.to_string())
