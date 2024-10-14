@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 
 data_frame_cargos = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\cargos.csv', encoding='latin-1')
 data_frame_departamentos = pd.read_csv(r'C:\Users\Lara\Documents\TP-3-Bloco\csv\departamentos.csv', encoding='latin-1')
@@ -23,6 +24,34 @@ listar_crescente(data_frame_historico_salarios, "salario_recebido")
 print("Tabela Dependentes em ordem crescente - nome:")
 listar_crescente(data_frame_dependentes, "nome")
 
+# 4 - Listar a média de idade dos filhos dos funcionários por departamento.
+dependentes_e_funcionarios = pd.merge(
+    data_frame_dependentes, 
+    data_frame_funcionarios, 
+    on='id_funcionario',  
+    suffixes=('_dependente', '_funcionario') 
+)
+
+dependentes_funcionarios_departamentos = pd.merge(
+    dependentes_e_funcionarios,
+    data_frame_departamentos,
+    on='id_departamento' 
+)
+
+def calcular_idade(data_nascimento):
+    hoje = datetime.now()
+    return hoje.year - data_nascimento.year - ((hoje.month, hoje.day) < (data_nascimento.month, data_nascimento.day))
+
+dependentes_filhos = dependentes_funcionarios_departamentos.query("relacao == 'filho(a)'").copy()
+dependentes_filhos.loc[:, 'data_nascimento'] = pd.to_datetime(dependentes_filhos['data_nascimento'], format='%Y-%m-%d')
+dependentes_filhos.loc[:, 'idade'] = dependentes_filhos['data_nascimento'].apply(calcular_idade)
+media_idade_filhos = dependentes_filhos.groupby('nome')['idade'].mean().reset_index()
+media_idade_filhos.columns = ['Nome Departamento', 'Média de Idade dos Filhos']
+
+# Exibindo o resultado
+print("Média de idade dos filhos dos funcionários por departamento:")
+print(media_idade_filhos.to_string())
+
 # 9 - Listar qual departamento possui o maior número de dependentes.
 dependentes_funcionarios = pd.merge(
     data_frame_dependentes, 
@@ -31,12 +60,10 @@ dependentes_funcionarios = pd.merge(
     suffixes=('_dependente', '_funcionario') 
 )
 
-resultado_final = pd.merge(
-    dependentes_funcionarios,
+resultado_final =pd.merge(
+    dependentes_e_funcionarios,
     data_frame_departamentos,
-    left_on='id_cargo',
-    right_on='id_departamento',
-    suffixes=('', '_departamento')
+    on='id_departamento' 
 )
 
 contagem_dependentes = resultado_final.groupby('nome')['nome_dependente'].count().reset_index()
