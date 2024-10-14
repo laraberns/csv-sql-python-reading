@@ -24,6 +24,27 @@ listar_crescente(data_frame_historico_salarios, "salario_recebido")
 print("Tabela Dependentes em ordem crescente - nome:")
 listar_crescente(data_frame_dependentes, "nome")
 
+# 3 - Listar os funcionários que tiveram aumento salarial nos últimos 3 meses
+funcionarios_salarios = pd.merge(
+    data_frame_funcionarios, 
+    data_frame_historico_salarios, 
+    on='id_funcionario',  
+    suffixes=('_funcionario', '_salarios') 
+)
+
+funcionarios_salarios = funcionarios_salarios.sort_values(by=['id_funcionario', 'mes_ano'])
+ultimos_quatro_salarios = funcionarios_salarios.groupby('id_funcionario').tail(4)
+salarios_comparacao = ultimos_quatro_salarios.groupby('id_funcionario').agg(
+    primeiro_salario=('salario_recebido', 'first'),
+    ultimo_salario=('salario_recebido', 'last')
+).reset_index()
+aumentos_salariais_df = salarios_comparacao[salarios_comparacao['ultimo_salario'] > salarios_comparacao['primeiro_salario']]
+resultado_final = pd.merge(aumentos_salariais_df, data_frame_funcionarios[['id_funcionario', 'nome']], on='id_funcionario', how='left')
+
+# Exibindo o resultado
+print("Funcionários que tiveram aumento salarial nos últimos 3 meses:")
+print(resultado_final[['nome']])
+
 # 4 - Listar a média de idade dos filhos dos funcionários por departamento.
 dependentes_e_funcionarios = pd.merge(
     data_frame_dependentes, 
