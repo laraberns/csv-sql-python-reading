@@ -2,7 +2,6 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
 import os
-from datetime import datetime
 
 load_dotenv()
 
